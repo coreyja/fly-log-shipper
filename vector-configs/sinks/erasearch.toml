@@ -1,14 +1,9 @@
 [transforms.trf_json]
-  type = "remap"
+  type = "json_parser"
   inputs = ["log_json"]
-  source = '''
-  if starts_with(.message, "{") {
-   # parse json messages
-    json = object!(parse_json!(.message))
-    del(.message)
-    . |= json
-  }
-  '''
+  drop_invalid = false
+  drop_field = true
+  field = "message"
 
 [sinks.erasearch]
   type="elasticsearch"
